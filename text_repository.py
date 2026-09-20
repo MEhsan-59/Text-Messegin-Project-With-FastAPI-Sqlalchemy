@@ -51,3 +51,12 @@ class TextRepository:
             self.db.commit()
             
         return messages
+
+    def delete_message(self, message_id: int):
+        message = self.db.query(models.Message).filter(models.Message.id == message_id).first()
+        
+        if message:
+            self.db.delete(message) 
+            self.db.commit()        
+            return True
+        return False 

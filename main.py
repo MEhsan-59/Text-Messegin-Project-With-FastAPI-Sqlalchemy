@@ -65,3 +65,12 @@ def get_unread_messages(manager: TextManager = Depends(get_manager), current_use
 @app.get("/messages/conversation/{peer}", response_model=list[schemas.MessageResponse])
 def get_conversation(peer: str, manager: TextManager = Depends(get_manager), current_user = Depends(get_current_user)):
     return manager.get_chat(current_user.user_id, peer)
+
+@app.delete("/messages/{message_id}")
+def delete_message(message_id: int, manager: TextManager = Depends(get_manager)):
+    success = manager.delete_message(message_id)
+    
+    if not success:
+        raise HTTPException(status_code=404, detail="Message not found")
+        
+    return {"message": "Message deleted successfully!"}

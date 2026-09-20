@@ -31,3 +31,6 @@ class TextManager:
 
     def get_chat(self, current_user_id: str, peer_id: str):
         return self.repo.get_conversation(current_user_id, peer_id)
+
+    def delete_message(self, message_id: int):
+        return self.repo.delete_message(message_id)
